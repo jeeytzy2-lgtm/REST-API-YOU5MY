@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOU5MY REST API</title>
+    
+    <link rel="icon" type="image/png" href="/media/jeeydev.png">
+    <link rel="shortcut icon" type="image/png" href="/media/jeeydev.png">
+    <link rel="apple-touch-icon" href="/media/jeeydev.png">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="YOU5MY REST API">
+    <meta property="og:description" content="Powerful Modular REST API YOU5MY by JeeyDev">
+    <meta property="og:image" content="/media/jeeydev.png">
+    <meta property="og:image:type" content="image/png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="YOU5MY REST API">
+    <meta name="twitter:description" content="Powerful Modular REST API YOU5MY by JeeyDev">
+    <meta name="twitter:image" content="/media/jeeydev.png">
+    <meta name="theme-color" content="#0c0d12">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-body: #0c0d12;
+            --bg-card: #15161d;
+            --bg-card-hover: #1b1d26;
+            --bg-surface: #181a24;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+            --text-primary: #f5f5f7;
+            --text-secondary: #94949e;
+            --text-muted: #5e606b;
+            --accent-blue: #0a84ff;
+            --accent-blue-hover: #0071e3;
+            --accent-green: #30d158;
+            --accent-orange: #ff9f0a;
+            --accent-purple: #bf5af2;
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(10, 132, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(191, 90, 242, 0.04) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(12, 13, 18, 0.85);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: #1c1d26;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .nav-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-badge {
+            font-size: 0.7rem;
+            color: var(--accent-blue);
+            background: rgba(10, 132, 255, 0.12);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(48, 209, 88, 0.1);
+            border: 1px solid rgba(48, 209, 88, 0.2);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 20px;
+            flex: 1;
+        }
+
+        .hero {
+            padding: 15px 0 30px;
+            text-align: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 24px;
+            line-height: 1.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            text-align: left;
+            will-change: transform;
+            transition: transform 0.25s var(--ease-ios), border-color 0.25s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .search-container {
+            margin: 30px 0 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 18px 14px 44px;
+            color: var(--text-primary);
+            font-size: 0.92rem;
+            outline: none;
+            transition: all 0.25s var(--ease-ios);
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+            background: #191b24;
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+        }
+
+        .view-stage {
+            position: relative;
+            min-height: 350px;
+            overflow: hidden;
+        }
+
+        .view-panel {
+            width: 100%;
+            transition: transform 0.35s var(--ease-ios), opacity 0.35s var(--ease-ios);
+            will-change: transform, opacity;
+        }
+
+        .view-panel.slide-out-left {
+            transform: translate3d(-30px, 0, 0);
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .view-panel.slide-in-right {
+            transform: translate3d(30px, 0, 0);
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .view-panel.active {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .category-folder {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            will-change: transform;
+            transition: all 0.25s var(--ease-ios);
+            user-select: none;
+        }
+
+        .category-folder:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-3px) scale(1.01);
+        }
+
+        .category-folder:active {
+            transform: scale(0.97);
+        }
+
+        .folder-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .folder-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 132, 255, 0.12);
+            color: var(--accent-blue);
+            border: 1px solid rgba(10, 132, 255, 0.2);
+            transition: all 0.25s var(--ease-ios);
+        }
+
+        .category-folder:hover .folder-icon {
+            transform: scale(1.08);
+        }
+
+        .folder-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: capitalize;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .folder-badge {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .folder-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.25s var(--ease-ios);
+        }
+
+        .category-folder:hover .folder-arrow {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(3px);
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-ios);
+        }
+
+        .btn-back:hover {
+            background: rgba(10, 132, 255, 0.12);
+            border-color: rgba(10, 132, 255, 0.3);
+        }
+
+        .btn-back:active {
+            transform: scale(0.96);
+        }
+
+        .detail-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .endpoints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .endpoints-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .endpoint-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            will-change: transform;
+            transition: all 0.25s var(--ease-ios);
+        }
+
+        .endpoint-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .method-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .method-get {
+            background: rgba(10, 132, 255, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(10, 132, 255, 0.25);
+        }
+
+        .method-post {
+            background: rgba(48, 209, 88, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(48, 209, 88, 0.25);
+        }
+
+        .endpoint-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .endpoint-path {
+            font-family: monospace;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 7px 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .endpoint-desc {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 18px;
+            min-height: 36px;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-ios);
+            border: none;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: #ffffff;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue-hover);
+        }
+
+        .btn-icon {
+            padding: 9px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s var(--ease-ios);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-hover);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            position: relative;
+            transform: scale(0.94) translateY(20px);
+            transition: all 0.3s var(--ease-ios);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .response-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .response-code {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(48, 209, 88, 0.15);
+            color: var(--accent-green);
+        }
+
+        .response-body {
+            background: #090a0d;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            font-family: monospace;
+            font-size: 0.82rem;
+            color: #d1d5db;
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 24px 20px;
+            text-align: center;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .swal2-popup.swal-ios {
+            background: rgba(24, 26, 36, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid var(--border-hover) !important;
+            border-radius: 18px !important;
+            color: #ffffff !important;
+        }
+        
+        .swal2-title {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <div class="nav-logo">
+                    <img src="/media/jeeydev.png" onerror="this.src='https://ui-avatars.com/api/?name=YOU5MY&background=0a84ff&color=fff&bold=true'" alt="Logo">
+                </div>
+                <div>
+                    <span class="brand-title">YOU5MY REST API</span>
+                    <span class="brand-badge">v1.0</span>
+                </div>
+            </a>
+            <div class="status-pill">
+                <div class="status-dot"></div>
+                <span>Server Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero-tag">
+                <i data-lucide="zap" style="width: 14px; height: 14px; color: var(--accent-blue);"></i>
+                <span>Fast & Reliable REST YOU5MY</span>
+            </div>
+            <h1 class="hero-title">Modular REST API YOU5MY</h1>
+            <p class="hero-desc">Pilih kategori untuk menjelajahi endpoint fitur secara terstruktur dan terisolasi.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">
+                        <i data-lucide="layers" style="width: 13px; height: 13px;"></i>
+                        <span>Total Endpoints</span>
+                    </div>
+                    <div class="stat-value" id="stat-endpoints">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">
+                        <i data-lucide="folder" style="width: 13px; height: 13px;"></i>
+                        <span>Kategori</span>
+                    </div>
+                    <div class="stat-value" id="stat-categories">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">
+                        <i data-lucide="users" style="width: 13px; height: 13px;"></i>
+                        <span>Pengunjung</span>
+                    </div>
+                    <div class="stat-value" id="stat-visitors">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">
+                        <i data-lucide="user" style="width: 13px; height: 13px;"></i>
+                        <span>Creator</span>
+                    </div>
+                    <div class="stat-value" id="stat-creator">JeeyDev</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">
+                        <i data-lucide="clock" style="width: 13px; height: 13px;"></i>
+                        <span>Waktu Realtime</span>
+                    </div>
+                    <div class="stat-value" id="stat-time" style="font-size: 0.92rem; font-weight: 600;">Memuat...</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="search-container">
+            <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Cari fitur atau endpoint...">
+            </div>
+        </div>
+
+        <div class="view-stage">
+            <div class="view-panel active" id="view-categories">
+                <div class="categories-grid" id="categories-grid">
+                    <div class="empty-state">
+                        <p>Memuat daftar kategori...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-panel slide-in-right" id="view-endpoints">
+                <div class="detail-header">
+                    <button class="btn-back" id="btn-back">
+                        <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+                        <span>Kategori</span>
+                    </button>
+                    <h3 class="detail-title" id="selected-category-title">Nama Kategori</h3>
+                    <span class="folder-badge" id="selected-category-count">0 Fitur</span>
+                </div>
+                <div class="endpoints-grid" id="endpoints-grid"></div>
+            </div>
+
+            <div class="view-panel slide-in-right" id="view-search">
+                <div class="detail-header">
+                    <button class="btn-back" id="btn-back-search">
+                        <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+                        <span>Kembali</span>
+                    </button>
+                    <h3 class="detail-title">Hasil Pencarian</h3>
+                </div>
+                <div class="endpoints-grid" id="search-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="test-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="modal-title">Test Endpoint</h3>
+                    <span id="modal-path" style="font-family: monospace; font-size: 0.78rem; color: var(--text-muted);"></span>
+                </div>
+                <button class="modal-close" id="modal-close-btn">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+
+            <div id="modal-params-form"></div>
+
+            <button class="btn btn-primary" id="modal-submit-btn" style="width: 100%; margin-top: 10px;">
+                <i data-lucide="play" style="width: 15px; height: 15px;"></i>
+                <span>Jalankan Request</span>
+            </button>
+
+            <div class="response-container" id="response-container">
+                <div class="response-header">
+                    <span class="response-code" id="response-status">200 OK</span>
+                    <button class="btn-icon" id="copy-response-btn" title="Salin JSON">
+                        <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                    </button>
+                </div>
+                <pre class="response-body" id="response-body"></pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 <a href="#" class="footer-link">JeeyDev</a> &bull; REST API Modular YOU5MY</p>
+    </footer>
+
+    <script>
+        let rawCategoryData = {};
+        let currentSelectedCategory = null;
+        let currentTestingEndpoint = null;
+
+        const categoryIcons = {
+            info: 'info',
+            search: 'search',
+            downloader: 'download',
+            tools: 'wrench',
+            ai: 'bot',
+            stalk: 'user-check'
+        };
+
+        const notify = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            customClass: { popup: 'swal-ios' }
+        });
+
+        function updateLiveTime() {
+            const el = document.getElementById('stat-time');
+            if (el) {
+                const now = new Date();
+                el.innerText = now.toLocaleTimeString('id-ID', { hour12: false }) + ' WIB';
+            }
+        }
+
+        async function fetchServerStats() {
+            try {
+                const rootRes = await fetch('/?json=true');
+                if (rootRes.ok) {
+                    const rootData = await rootRes.json();
+                    if (rootData.creator) document.getElementById('stat-creator').innerText = rootData.creator;
+                    if (rootData.visitors && rootData.visitors.total !== undefined) {
+                        document.getElementById('stat-visitors').innerText = Number(rootData.visitors.total).toLocaleString('id-ID');
+                    }
+                }
+            } catch (e) {}
+        }
+
+        async function fetchEndpoints() {
+            try {
+                const res = await fetch('/api/info/listendp');
+                const json = await res.json();
+                const endpointsMap = json.result || json.data;
+
+                if (json.status && endpointsMap) {
+                    rawCategoryData = endpointsMap;
+                    const categories = Object.keys(endpointsMap);
+                    
+                    let totalCount = 0;
+                    categories.forEach(c => totalCount += (endpointsMap[c] || []).length);
+
+                    document.getElementById('stat-endpoints').innerText = json.total_endpoints || totalCount;
+                    document.getElementById('stat-categories').innerText = json.total_categories || categories.length;
+
+                    renderCategories();
+                }
+            } catch (error) {
+                document.getElementById('categories-grid').innerHTML = '<div class="empty-state"><p style="color: #ff453a;">Gagal memuat kategori API</p></div>';
+            }
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function renderCategories() {
+            const grid = document.getElementById('categories-grid');
+            const categories = Object.keys(rawCategoryData);
+
+            if (!categories.length) {
+                grid.innerHTML = '<div class="empty-state"><p>Tidak ada kategori ditemukan.</p></div>';
+                return;
+            }
+
+            grid.innerHTML = categories.map(cat => {
+                const list = rawCategoryData[cat] || [];
+                const iconName = categoryIcons[cat.toLowerCase()] || 'folder';
+
+                return `
+                    <div class="category-folder" onclick="openCategory('${cat}')">
+                        <div class="folder-left">
+                            <div class="folder-icon">
+                                <i data-lucide="${iconName}" style="width: 22px; height: 22px;"></i>
+                            </div>
+                            <div>
+                                <h4 class="folder-title">${cat}</h4>
+                                <span class="folder-badge">${list.length} Fitur Terpasang</span>
+                            </div>
+                        </div>
+                        <div class="folder-arrow">
+                            <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function openCategory(category) {
+            currentSelectedCategory = category;
+            const list = rawCategoryData[category] || [];
+
+            document.getElementById('selected-category-title').innerText = category;
+            document.getElementById('selected-category-count').innerText = `${list.length} Fitur`;
+
+            const grid = document.getElementById('endpoints-grid');
+
+            if (!list.length) {
+                grid.innerHTML = '<div class="empty-state"><p>Tidak ada endpoint di kategori ini.</p></div>';
+            } else {
+                grid.innerHTML = list.map(ep => createEndpointCard(ep, category)).join('');
+            }
+
+            switchView('view-endpoints');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function createEndpointCard(ep, category) {
+            return `
+                <div class="endpoint-card">
+                    <div>
+                        <div class="card-top">
+                            <span class="method-badge ${(ep.method || 'GET') === 'GET' ? 'method-get' : 'method-post'}">${ep.method || 'GET'}</span>
+                            <span class="folder-badge" style="text-transform: uppercase;">${category}</span>
+                        </div>
+                        <h4 class="endpoint-name">${ep.name}</h4>
+                        <div class="endpoint-path">
+                            <span>${ep.path}</span>
+                            <i data-lucide="copy" style="width: 14px; height: 14px; cursor: pointer;" onclick="copyToClipboard('${ep.path}')"></i>
+                        </div>
+                        <p class="endpoint-desc">${ep.description || 'Tidak ada deskripsi'}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="openTestModal('${category}', '${ep.path}')">
+                            <i data-lucide="terminal" style="width: 14px; height: 14px;"></i>
+                            <span>Test API</span>
+                        </button>
+                        <a href="${ep.path}" target="_blank" class="btn btn-icon" title="Buka di tab baru">
+                            <i data-lucide="external-link" style="width: 15px; height: 15px;"></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchView(targetId) {
+            const panels = ['view-categories', 'view-endpoints', 'view-search'];
+            panels.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === targetId) {
+                    el.className = 'view-panel active';
+                } else {
+                    el.className = 'view-panel slide-out-left';
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('btn-back').addEventListener('click', () => {
+            switchView('view-categories');
+        });
+
+        document.getElementById('btn-back-search').addEventListener('click', () => {
+            document.getElementById('search-input').value = '';
+            switchView('view-categories');
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                switchView('view-categories');
+                return;
+            }
+
+            const searchGrid = document.getElementById('search-grid');
+            const matched = [];
+
+            Object.keys(rawCategoryData).forEach(cat => {
+                (rawCategoryData[cat] || []).forEach(ep => {
+                    if ((ep.name || '').toLowerCase().includes(query) || 
+                        (ep.path || '').toLowerCase().includes(query) || 
+                        (ep.description || '').toLowerCase().includes(query)) {
+                        matched.push({ ...ep, category: cat });
+                    }
+                });
+            });
+
+            if (!matched.length) {
+                searchGrid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><p>Tidak ada fitur yang cocok dengan pencarian.</p></div>';
+            } else {
+                searchGrid.innerHTML = matched.map(ep => createEndpointCard(ep, ep.category)).join('');
+            }
+
+            switchView('view-search');
+            if (window.lucide) lucide.createIcons();
+        });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(window.location.origin + text);
+            notify.fire({
+                icon: 'success',
+                title: 'URL endpoint disalin'
+            });
+        }
+
+        function openTestModal(category, path) {
+            const list = rawCategoryData[category] || [];
+            const ep = list.find(e => e.path === path) || Object.values(rawCategoryData).flat().find(e => e.path === path);
+            if (!ep) return;
+
+            currentTestingEndpoint = ep;
+            document.getElementById('modal-title').innerText = ep.name;
+            document.getElementById('modal-path').innerText = `${ep.method || 'GET'} ${ep.path}`;
+
+            const paramsContainer = document.getElementById('modal-params-form');
+            const paramKeys = Object.keys(ep.parameters || {});
+
+            if (!paramKeys.length) {
+                paramsContainer.innerHTML = '<p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Endpoint ini tidak memerlukan parameter.</p>';
+            } else {
+                paramsContainer.innerHTML = paramKeys.map(key => `
+                    <div class="form-group">
+                        <label class="form-label">${key}</label>
+                        <input type="text" class="form-control param-input" data-param="${key}" placeholder="${ep.parameters[key]}">
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('response-container').style.display = 'none';
+            document.getElementById('test-modal').classList.add('active');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        document.getElementById('modal-close-btn').addEventListener('click', () => {
+            document.getElementById('test-modal').classList.remove('active');
+        });
+
+        document.getElementById('test-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'test-modal') {
+                document.getElementById('test-modal').classList.remove('active');
+            }
+        });
+
+        document.getElementById('modal-submit-btn').addEventListener('click', async () => {
+            if (!currentTestingEndpoint) return;
+
+            const inputs = document.querySelectorAll('.param-input');
+            const queryParams = new URLSearchParams();
+
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    queryParams.append(input.dataset.param, input.value.trim());
+                }
+            });
+
+            const queryString = queryParams.toString();
+            const targetUrl = `${currentTestingEndpoint.path}${queryString ? '?' + queryString : ''}`;
+
+            const btn = document.getElementById('modal-submit-btn');
+            btn.innerHTML = '<span>Memproses...</span>';
+
+            try {
+                const response = await fetch(targetUrl);
+                const data = await response.json();
+
+                const responseContainer = document.getElementById('response-container');
+                const responseStatus = document.getElementById('response-status');
+                const responseBody = document.getElementById('response-body');
+
+                responseStatus.innerText = `${response.status} ${response.statusText || 'OK'}`;
+                responseStatus.style.background = response.ok ? 'rgba(48, 209, 88, 0.15)' : 'rgba(255, 69, 58, 0.15)';
+                responseStatus.style.color = response.ok ? 'var(--accent-green)' : '#ff453a';
+
+                responseBody.innerText = JSON.stringify(data, null, 2);
+                responseContainer.style.display = 'block';
+
+                notify.fire({
+                    icon: response.ok ? 'success' : 'error',
+                    title: response.ok ? 'Request berhasil' : 'Request gagal'
+                });
+            } catch (err) {
+                notify.fire({
+                    icon: 'error',
+                    title: 'Gagal terhubung ke API'
+                });
+            } finally {
+                btn.innerHTML = '<i data-lucide="play" style="width: 15px; height: 15px;"></i> <span>Jalankan Request</span>';
+                if (window.lucide) lucide.createIcons();
+            }
+        });
+
+        document.getElementById('copy-response-btn').addEventListener('click', () => {
+            const body = document.getElementById('response-body').innerText;
+            navigator.clipboard.writeText(body);
+            notify.fire({
+                icon: 'success',
+                title: 'Respon JSON disalin'
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateLiveTime();
+            setInterval(updateLiveTime, 1000);
+            fetchServerStats();
+            fetchEndpoints();
+        });
+    </script>
+</body>
+</html>
