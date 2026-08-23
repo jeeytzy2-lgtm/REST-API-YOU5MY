@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "index.js": {
+      "includeFiles": "src/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.js"
+    }
+  ]
+}
